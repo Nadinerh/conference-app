@@ -1,0 +1,7 @@
+.card { display: flex; gap: 24px; align-items: center; background: #fff;
+        border-radius: 18px; padding: 24px 32px; margin: 12px 0;
+        border-left: 5px solid; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.orange { border-color: #f59e0b; }
+.icon { font-size: 2rem; background: #fff3d6; border-radius: 50%;
+        width: 64px; height: 64px; display: grid; place-items: center; }
+h2 { color: #1b3a6b; margin: 0 0 12px; }

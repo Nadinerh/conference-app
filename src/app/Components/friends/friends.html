@@ -1,0 +1,15 @@
+<section class="card green">
+  <div>
+    <h2>Liste des amis</h2>
+    <div class="inputs">
+      <input [(ngModel)]="name" />
+      <input [(ngModel)]="name" />
+      <input [(ngModel)]="name" />
+    </div>
+    <ul>
+      @for (friend of friends; track friend) {
+        <li>{{ friend }}</li>
+      }
+    </ul>
+  </div>
+</section>

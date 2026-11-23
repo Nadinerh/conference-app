@@ -1,0 +1,48 @@
+<section class="section-card teal" id="conferences">
+  <div class="icon-circle">📅</div>
+  <div class="content">
+    <h2>Liste des conférences à venir</h2>
+    <p class="hint">Cliquez sur une conférence pour afficher ses détails.</p>
+
+    <input
+      class="search"
+      type="text"
+      placeholder="Taper le titre de la conférence"
+      [(ngModel)]="searchTerm"
+    />
+
+    @if (conferences().length === 0) {
+      <p class="message">Aucune conférence n’est enregistrée pour le moment.</p>
+    } @else {
+      <div class="grid">
+        @for (c of filteredConferences(); track c.id) {
+          <article
+            class="card"
+            [class.selected]="selectedId() === c.id"
+            (click)="toggleDetails(c)"
+          >
+            <h3>{{ c.title | uppercase }}</h3>
+            <p><strong>Date :</strong> {{ c.date | date: 'dd/MM/yyyy' }}</p>
+            <p><strong>Lieu :</strong> {{ c.place }}</p>
+            <p><strong>Places restantes :</strong> {{ remainingPlaces(c) }}</p>
+
+            @if (selectedId() === c.id) {
+              <p class="details">{{ c.description }}</p>
+            }
+
+            <button
+              type="button"
+              [ngClass]="buttonClass(c)"
+              [disabled]="remainingPlaces(c) === 0"
+              (click)="register(c, $event)"
+            >
+              S'inscrire
+            </button>
+          </article>
+        } @empty {
+          <p class="message">Aucune conférence ne correspond à votre recherche.</p>
+        }
+      </div>
+    }
+  </div>
+</section>

@@ -41,3 +41,5 @@ body {
 
 .section-card .content { flex: 1; min-width: 0; }
 .section-card h2 { margin: 0 0 16px; color: #173a6b; font-size: 1.6rem; }
+.section-card.purple { border-left-color: #7c3aed; }
+.section-card.purple .icon-circle { background: #f1e8ff; align-self: flex-start; }

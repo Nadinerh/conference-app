@@ -1,4 +1,6 @@
+:host { display: flex; flex-direction: column; gap: 16px; }
 .hint { color: #6b7280; margin: 0 0 16px; }
+
 
 .search {
   width: 100%;
@@ -30,7 +32,7 @@
 .card.selected { border-color: #2563eb; box-shadow: 0 0 0 2px #bfdbfe; }
 .card h3 { color: #173a6b; margin: 4px 0 16px; }
 .card p { margin: 0 0 14px; }
-.details { color: #374151; font-style: italic; }
+
 
 .message {
   margin-top: 16px;

@@ -19,16 +19,13 @@
           <article
             class="card"
             [class.selected]="selectedId() === c.id"
-            (click)="toggleDetails(c)"
+            (click)="selectConference(c)"
           >
             <h3>{{ c.title | uppercase }}</h3>
             <p><strong>Date :</strong> {{ c.date | date: 'dd/MM/yyyy' }}</p>
             <p><strong>Lieu :</strong> {{ c.place }}</p>
             <p><strong>Places restantes :</strong> {{ remainingPlaces(c) }}</p>
 
-            @if (selectedId() === c.id) {
-              <p class="details">{{ c.description }}</p>
-            }
 
             <button
               type="button"
@@ -46,3 +43,7 @@
     }
   </div>
 </section>
+<app-conference-details
+  [conference]="selectedConference()"
+  (registered)="addParticipant($event)"
+/>

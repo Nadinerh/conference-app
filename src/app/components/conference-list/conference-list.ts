@@ -2,10 +2,11 @@ import { Component, computed, signal } from '@angular/core';
 import { DatePipe, NgClass, UpperCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Conference } from '../../models/conference';
+import { ConferenceDetails } from '../conference-details/conference-details';
 
 @Component({
   selector: 'app-conference-list',
-  imports: [FormsModule, NgClass, UpperCasePipe, DatePipe],
+  imports: [FormsModule, NgClass, UpperCasePipe, DatePipe, ConferenceDetails],
   templateUrl: './conference-list.html',
   styleUrl: './conference-list.css',
 })
@@ -45,7 +46,13 @@ export class ConferenceList {
   searchTerm = signal('');
 
   /** Conférence dont les détails sont affichés. */
+   /** Identifiant de la conférence sélectionnée. */
   selectedId = signal<number | null>(null);
+
+  /** Conférence sélectionnée, transmise au composant enfant (@Input). */
+  selectedConference = computed(
+    () => this.conferences().find((c) => c.id === this.selectedId()) ?? null,
+  );
 
   /** Conférences à venir uniquement. */
   private upcoming = computed(() => {
@@ -74,16 +81,22 @@ export class ConferenceList {
   }
 
   /** Inscription : +1 participant par clic, dans la limite des places. */
+   /** Inscription depuis la carte de la liste : +1 participant par clic. */
   register(c: Conference, event: Event): void {
     event.stopPropagation();
+    this.addParticipant(c);
+  }
+
+  /** Utilisé par la liste ET par l'événement (registered) du composant enfant. */
+  addParticipant(c: Conference): void {
     if (this.remainingPlaces(c) <= 0) return;
     this.conferences.update((list) =>
       list.map((x) => (x.id === c.id ? { ...x, nbParticipants: x.nbParticipants + 1 } : x)),
     );
   }
 
-  /** Affiche / masque les détails d'une conférence. */
-  toggleDetails(c: Conference): void {
-    this.selectedId.update((id) => (id === c.id ? null : c.id));
+  /** Sélectionne une conférence : le composant enfant est mis à jour automatiquement. */
+  selectConference(c: Conference): void {
+    this.selectedId.set(c.id);
   }
 }
